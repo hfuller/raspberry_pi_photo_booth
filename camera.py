@@ -3,6 +3,7 @@
 #Imports
 import datetime
 import os
+import errno
 from time import sleep
 from PIL import Image
 
@@ -150,7 +151,15 @@ def taking_photo(photo_number, filename_prefix):
     """
 
     #get filename to use
-    filename = filename_prefix + '_' + str(photo_number) + 'of'+ str(total_pics)+'.jpg'
+    dirname = filename_prefix
+    filename = filename_prefix + '/' + str(photo_number) + 'of'+ str(total_pics)+'.jpg'
+
+    #ensure that dir exists
+    try:
+        os.makedirs(dirname)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
 
     #countdown from 3, and display countdown on screen
     for counter in range(3,0,-1):
@@ -176,7 +185,7 @@ def playback_screen(filename_prefix):
     #Playback
     prev_overlay = False
     for photo_number in range(1, total_pics + 1):
-        filename = filename_prefix + '_' + str(photo_number) + 'of'+ str(total_pics)+'.jpg'
+        filename = filename_prefix + '/' + str(photo_number) + 'of'+ str(total_pics)+'.jpg'
         this_overlay = overlay_image(filename, False, 3+total_pics)
         # The idea here, is only remove the previous overlay after a new overlay is added.
         if prev_overlay:
