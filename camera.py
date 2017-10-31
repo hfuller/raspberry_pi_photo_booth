@@ -7,6 +7,8 @@ import errno
 from time import sleep
 from PIL import Image
 
+from escpos.printer import File, Usb
+
 import RPi.GPIO as GPIO
 import picamera
 
@@ -48,6 +50,11 @@ camera.rotation = 270
 camera.annotate_text_size = 80
 camera.resolution = (photo_w, photo_h)
 camera.hflip = True # When preparing for photos, the preview will be flipped horizontally.
+
+#Setup printer
+#printer = File()
+printer = Usb(0x0416, 0x5011)
+printer.hw('RESET')
 
 ####################
 ### Other Config ###
@@ -132,6 +139,13 @@ def overlay_image(image_path, duration=0, layer=3):
     else:
         return o_id # we have an overlay, and will need to remove it later
 
+def print_photo(photo_number, filename_prefix):
+    print("Printing", photo_number, "from", filename_prefix)
+    filename = filename_prefix + '/' + str(photo_number) + 'of'+ str(total_pics)+'.jpg'
+    image = Image.open(filename)
+    image.thumbnail( (384,382), Image.ANTIALIAS)
+    printer.image(image)
+
 ###############
 ### Screens ###
 ###############
@@ -190,6 +204,12 @@ def playback_screen(filename_prefix):
         # The idea here, is only remove the previous overlay after a new overlay is added.
         if prev_overlay:
             remove_overlay(prev_overlay)
+        try:
+            print_photo(photo_number, filename_prefix)
+        except:
+            print("Printing image", photo_number, "failed")
+            raise
+            pass
         sleep(2)
         prev_overlay = this_overlay
     remove_overlay(prev_overlay)
