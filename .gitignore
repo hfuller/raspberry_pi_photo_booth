@@ -1,4 +1,4 @@
-photos/*.jpg
+photos/
 assets/._*
 ._.gitignore
 ._*
