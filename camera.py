@@ -170,6 +170,10 @@ def taking_photo(photo_number, filename_prefix):
     #Take still
     camera.annotate_text = ''
     camera.capture(filename)
+
+    #White flash
+    overlay_image(REAL_PATH + "/assets/white.png", 0.1)
+
     print("Photo (" + str(photo_number) + ") saved: " + filename)
 
 
@@ -254,8 +258,8 @@ def main():
         remove_overlay(overlay_2)
         remove_overlay(overlay_1)
 
+        prep_for_photo_screen(1)
         for photo_number in range(1, total_pics + 1):
-            prep_for_photo_screen(photo_number)
             taking_photo(photo_number, filename_prefix)
 
         #thanks for playing
