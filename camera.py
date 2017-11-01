@@ -226,11 +226,11 @@ def main():
 
     #Wait for someone to push the button
     i = 0
-    blink_speed = 5
+    blink_speed = 2
     while True:
 
         #Use falling edge detection to see if button is pushed
-        is_pressed = GPIO.wait_for_edge(pin_camera_btn, GPIO.FALLING, timeout=100)
+        is_pressed = GPIO.wait_for_edge(pin_camera_btn, GPIO.FALLING, timeout=400)
         exit_button = GPIO.wait_for_edge(pin_exit_btn, GPIO.FALLING, timeout=100)
 
         if exit_button is not None:
