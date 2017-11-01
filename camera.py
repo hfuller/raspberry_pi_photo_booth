@@ -10,6 +10,8 @@ from PIL import Image
 import RPi.GPIO as GPIO
 import picamera
 
+import serial
+
 #############
 ### Debug ###
 #############
@@ -47,7 +49,10 @@ camera = picamera.PiCamera()
 camera.rotation = 270
 camera.annotate_text_size = 80
 camera.resolution = (photo_w, photo_h)
-camera.hflip = True # When preparing for photos, the preview will be flipped horizontally.
+camera.hflip = False # When preparing for photos, the preview will be flipped horizontally.
+
+#setup serial
+ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600)
 
 ####################
 ### Other Config ###
@@ -236,6 +241,11 @@ def main():
         if exit_button is not None:
             return #Exit the photo booth
 
+        if ser.in_waiting > 0:
+            print("External button pressed")
+            ser.reset_input_buffer()
+            is_pressed = True
+
         if TESTMODE_AUTOPRESS_BUTTON:
             is_pressed = True
 
@@ -274,6 +284,7 @@ def main():
         overlay_1 = overlay_image(intro_image_1, 0, 3)
         overlay_2 = overlay_image(intro_image_2, 0, 4)
         print("Press the button to take a photo")
+        ser.reset_input_buffer()
 
 if __name__ == "__main__":
     try:
