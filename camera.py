@@ -142,7 +142,7 @@ def prep_for_photo_screen(photo_number):
     """
 
     #Get ready for the next photo
-    get_ready_image = REAL_PATH + "/assets/get_ready_"+str(photo_number)+".png"
+    get_ready_image = REAL_PATH + "/assets/get_ready.png"
     overlay_image(get_ready_image, prep_delay)
 
 def taking_photo(photo_number, filename_prefix):
@@ -196,7 +196,7 @@ def playback_screen(filename_prefix):
     
     #All done
     print("All done!")
-    finished_image = REAL_PATH + "/assets/all_done_delayed_upload.png"
+    finished_image = REAL_PATH + "/assets/all_done.png"
     overlay_image(finished_image, 5)
 
 
