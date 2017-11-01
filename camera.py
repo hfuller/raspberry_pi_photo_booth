@@ -24,15 +24,15 @@ TESTMODE_FAST             = False # Reduced wait between photos and 2 photos onl
 pin_camera_btn = 21 # pin that the 'take photo' button is attached to
 pin_exit_btn   = 13 # pin that the 'exit app' button is attached to (OPTIONAL BUTTON FOR EXITING THE APP)
 total_pics = 4      # number of pics to be taken
-prep_delay = 4      # number of seconds as users prepare to have photo taken
+prep_delay = 10     # number of seconds as users prepare to have photo taken
 photo_w = 1920      # take photos at this resolution
 photo_h = 1152
 screen_w = 800      # resolution of the photo booth display
 screen_h = 480
 
 if TESTMODE_FAST:
-    total_pics = 2     # number of pics to be taken
-    prep_delay = 2     # number of seconds at step 1 as users prep to have photo taken
+    total_pics = 1     # number of pics to be taken
+    prep_delay = 1     # number of seconds at step 1 as users prep to have photo taken
 
 ##############################
 ### Setup Objects and Pins ###
