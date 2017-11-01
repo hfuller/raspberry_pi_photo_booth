@@ -57,11 +57,12 @@ REAL_PATH = os.path.dirname(os.path.realpath(__file__))
 ########################
 ### Helper Functions ###
 ########################
-def print_overlay(string_to_print):
+def print_overlay(string_to_print, size=32):
     """
     Writes a string to both [i] the console, and [ii] camera.annotate_text
     """
     print(string_to_print)
+    camera.annotate_text_size = size
     camera.annotate_text = string_to_print
 
 def get_base_filename_for_images():
@@ -163,7 +164,7 @@ def taking_photo(photo_number, filename_prefix):
 
     #countdown from 3, and display countdown on screen
     for counter in range(3,0,-1):
-        print_overlay("             ..." + str(counter))
+        print_overlay(str(counter), 160)
         sleep(1)
 
     #Take still
